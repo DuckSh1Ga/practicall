@@ -1,0 +1,19 @@
+from tkinter import*
+
+
+round=Tk()
+
+round.title('Python Class 11 Project')
+round.geometry('700x700')
+
+lbl = Label(round, text = "Welcome to Police report", font=('Times New Roman', 20, 'bold'))
+lbl.pack()
+
+def clicked():
+    lbl.configure(text= 'Choose criminal information')
+
+btn = Button(round, text = "Click me" ,fg = "red", command=clicked)
+btn.pack()
+
+round.mainloop()
+
