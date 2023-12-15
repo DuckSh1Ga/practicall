@@ -1,0 +1,30 @@
+from tkinter import*
+from tkinter import messagebox
+round=Tk()
+
+round.title('Python Class 11 Project')
+round.geometry('700x700')
+round.configure(bg='lightsteelblue')
+
+lbl = Label(round, text = "Welcome to Police report",bg='lightsteelblue',
+            fg='black', font=('Times New Roman', 20, 'bold'))
+lbl.pack()
+
+def clicked():
+    lbl.configure (text= 'Register into FIR')
+    messagebox.showinfo('Registeration', 'Opened FIR Registeration')
+
+    
+btn = Button(round, text = "FIR registration" ,height=5,width=20,
+             bg='aquamarine',fg = "black", command=clicked)
+btn.place(x=90, y=70)
+
+
+def clicked():
+    lbl.configure(text= 'Wanted criminals')
+
+btn2 = Button(round, text = "Wanted " ,bg='aquamarine',
+              fg = "black",height=5,width=20, command=clicked)
+btn2.place(x=450, y=70)
+
+round.mainloop()
