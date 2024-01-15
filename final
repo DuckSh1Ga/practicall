@@ -1,0 +1,79 @@
+import tkinter as tk
+from tkinter import messagebox
+
+class FIRRegister:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Police FIR Registration")
+
+        # Entry variables
+        self.name_var = tk.StringVar()
+        self.address_var = tk.StringVar()
+
+        # List to store FIR INfo
+        self.fir_records = []
+
+        # GUI components
+        tk.Label(root, text="Name:").grid(row=0, column=0, padx=10, pady=10)
+        tk.Entry(root, textvariable=self.name_var).grid(row=0, column=1, padx=10, pady=10)
+
+        tk.Label(root, text="Address:").grid(row=1, column=0, padx=10, pady=10)
+        tk.Entry(root, textvariable=self.address_var).grid(row=1, column=1, padx=10, pady=10)
+
+        tk.Label(root, text="Incident Details:").grid(row=2, column=0, padx=10, pady=10)
+        self.incident_text = tk.Text(root, height=5, width=30, wrap=tk.WORD, padx=10, pady=10, relief=tk.SOLID, borderwidth=1)
+        self.incident_text.grid(row=2, column=1, padx=10, pady=10)
+        
+        tk.Button(root, text="Submit FIR", command=self.submit_fir).grid(row=3, column=0, columnspan=2, pady=20)
+
+        tk.Button(root, text="View All FIRs", command=self.view_all_firs).grid(row=4, column=0, columnspan=2, pady=10)
+
+    def submit_fir(self):
+        # Gather information
+        name = self.name_var.get()
+        address = self.address_var.get()
+        incident_details = self.incident_text.get("1.0", tk.END)
+
+        # Validate input
+        if not name or not address or not incident_details.strip():
+            messagebox.showerror("Error", "Please fill in all the fields.")
+            return
+
+        # Save FIR information (you can customize this part based on your needs)
+        self.fir_records.append({"Name": name, "Address": address, "Incident Details": incident_details})
+
+
+        # Display success message
+        messagebox.showinfo("Success", "FIR registered successfully.")
+
+        # Clear the entry fields after submission
+        self.name_var.set("")
+        self.address_var.set("")
+        self.incident_text.delete("1.0", tk.END)
+
+    def view_all_firs(self):
+        if not self.fir_records:
+            messagebox.showinfo("No FIRs", "No FIRs have been registered yet.")
+        else:
+            # Create a new window to display all FIRs
+            info_window = tk.Toplevel(self.root)
+            info_window.title("All FIRs")
+
+            # Window appearance
+            info_window.geometry('600x600')
+            info_window.configure(bg='thistle1')
+            custom_font = ('Ubuntu', 15, 'bold')
+            
+
+            # Display FIR information in a grid format
+            for i, record in enumerate(self.fir_records):
+                tk.Label(info_window, text=f"FIR {i + 1}", font=('Ubuntu',15,'bold'), bg='thistle1').grid(row=i, column=0, padx=10, pady=10)
+            for j, (field, value) in enumerate(record.items()):
+                tk.Label(info_window, text=f"{field}:", font=custom_font,bg='thistle1').grid(row=i, column=2 * j + 1, padx=5, pady=5)
+                tk.Label(info_window, text=value, font=custom_font,bg='thistle1').grid(row=i, column=2 * j + 2, padx=5, pady=5)
+
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = FIRRegister(root)
+    root.mainloop()
